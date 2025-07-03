@@ -1,0 +1,11 @@
+Food_ID,Name,C_Type,Veg_Non,Describe
+53.0,chocolate appe,Snack,veg,"rice, coconut, baking powder, vanilla extract, cinnamon powder, brown sugar, unsweetened cocoa powder, salt, chocolate chips, butter"
+49.0,christmas tree pizza,Italian,veg,"pizza dough (2 boules), red pepper, red onion, basil pesto (purchased, homemade or vegan pesto), mozzarella cheese, kosher salt"
+47.0,meat lovers pizza,Italian,non-veg,"millet flour, tapioca flour, soy milk, garlic powder, baking powder, salt, tomato sauce, mozzarella cheese, prosciutto, pepperoni, chicken salami, salami milano, rosemary, olive oil"
+5.0,christmas cake,Dessert,veg,"christmas dry fruits (pre-soaked), orange zest, lemon zest, jaggery syrup, almond flour, apple, butter (softened), eggs"
+18.0,grilled almond barfi,Dessert,veg,"khoya, sweetener (optional), almonds (crushed)"
+21.0,apple rabdi,Dessert,veg,"apples, milk, sugar, green cardamoms, almonds (blanched), pistachios (blanched)"
+7.0,chocolate nero cookies,Dessert,veg,"almonds, eggs, granulated sugar, bittersweet chocolate, unsalted butter, flour, baking powder, castor sugar, icing sugar"
+22.0,baked namak para,Snack,veg,"whole wheat flour (atta), refined flour (maida), baking powder, ghee, salt, carom seeds (ajwain)"
+163.0,red rice vermicelli kheer,Indian,veg,"red rice vermicelli / broken sooji / semolina vermicelli, butter, almonds, whole milk, cardamom powder, saffron strands / thread, sugar"
+23.0,dates and nuts ladoo,Dessert,veg,"dates (pitted), mixed nuts (almonds, cashews, walnuts, pistachios, peanuts), dessicated coconut (optional)"
