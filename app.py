@@ -1,86 +1,100 @@
 import pandas as pd
 import numpy as np
+import os
 from sklearn.neighbors import NearestNeighbors
 from scipy.sparse import csr_matrix
 
-# Load rating data
-rating = pd.read_csv('ratings.csv')[:511]
-df = pd.read_csv('1662574418893344.csv')  # Contains Food_ID and food metadata
+# --- Load and clean data ---
+rating = pd.read_csv('ratings.csv', dtype=str)
+df = pd.read_csv('foods.csv', dtype=str)
 
-# Filter users and foods with minimal activity
-min_user_ratings = 3
-min_food_ratings = 5
+# Clean whitespace
+rating['User_ID'] = rating['User_ID'].str.strip()
+rating['Product_ID'] = rating['Product_ID'].str.strip()
+df['Product_ID'] = df['Product_ID'].str.strip()
 
-user_counts = rating['User_ID'].value_counts()
-food_counts = rating['Food_ID'].value_counts()
+# Convert rating to float and clip
+rating['Rating'] = pd.to_numeric(rating['Rating'], errors='coerce').fillna(0).clip(0, 5)
 
-filtered_rating = rating[
-    rating['User_ID'].isin(user_counts[user_counts >= min_user_ratings].index) &
-    rating['Food_ID'].isin(food_counts[food_counts >= min_food_ratings].index)
-]
-
-# Build rating matrix and train NearestNeighbors
-rating_matrix = filtered_rating.pivot_table(index='Food_ID', columns='User_ID', values='Rating').fillna(0)
+# --- Build rating matrix ---
+rating_matrix = rating.pivot_table(index='Product_ID', columns='User_ID', values='Rating').fillna(0)
 csr_rating_matrix = csr_matrix(rating_matrix.values)
 recommender = NearestNeighbors(metric='cosine', n_neighbors=20)
 recommender.fit(csr_rating_matrix)
 
-# Cold start fallback: most popular items
+# --- Output directory for results ---
+output_dir = "outputs"
+os.makedirs(output_dir, exist_ok=True)
+
+# --- Cold start function ---
 def Get_ColdStart_Recommendations(top_k=10):
     popular = (
-        rating.groupby('Food_ID')['Rating']
+        rating.groupby('Product_ID')['Rating']
         .count()
         .sort_values(ascending=False)
         .head(top_k)
         .index
         .tolist()
     )
-    result_df = pd.DataFrame({'Food_ID': popular})
-    result_df = pd.merge(result_df, df, on='Food_ID', how='left')
+    result_df = pd.DataFrame({'Product_ID': popular})
+    result_df = pd.merge(result_df, df, on='Product_ID', how='left')
     return result_df
 
-# Recommend top_k items for a given user
+# --- Main recommendation function ---
 def Get_Recommendations(user_id, top_k=10):
-    user_data = filtered_rating[filtered_rating['User_ID'] == user_id]
+    print(f"\nLooking for User_ID: '{user_id}'")
+
+    user_data = rating[rating['User_ID'] == user_id]
+
     if user_data.empty:
-        print(f'User_ID {user_id} has no history, using cold start fallback.')
+        print(f'User_ID {user_id} not found or has no ratings — using cold start fallback.')
         result_df = Get_ColdStart_Recommendations(top_k)
     else:
         scores = {}
         for _, row in user_data.iterrows():
-            food_id = row['Food_ID']
-            rating = row['Rating']
+            Product_ID = row['Product_ID']
+            rating_val = row['Rating']
+
+            if Product_ID not in rating_matrix.index:
+                continue
+
             try:
-                food_index = np.where(rating_matrix.index == food_id)[0][0]
+                food_index = np.where(rating_matrix.index == Product_ID)[0][0]
                 distances, indices = recommender.kneighbors(
                     rating_matrix.iloc[food_index].values.reshape(1, -1),
                     n_neighbors=top_k + 1
                 )
                 neighbors = rating_matrix.iloc[indices[0][1:]].index.tolist()
                 for neighbor in neighbors:
-                    if neighbor != food_id:
-                        scores[neighbor] = scores.get(neighbor, 0) + rating
+                    if neighbor != Product_ID:
+                        scores[neighbor] = scores.get(neighbor, 0) + rating_val
             except IndexError:
                 continue
 
-        # Filter out already rated items
-        already_rated = set(user_data['Food_ID'])
-        scored_items = [(fid, score) for fid, score in scores.items() if fid not in already_rated]
+        # Use only the 100 most recent ratings to filter
+        already_rated = set(user_data.tail(100)['Product_ID'])
+
+        scored_items = [(fid, score) for fid, score in scores.items() if fid not in already_rated or np.random.rand() > 0.5 ]
         sorted_items = sorted(scored_items, key=lambda x: x[1], reverse=True)
         top_items = [fid for fid, _ in sorted_items[:top_k]]
 
-        result_df = pd.DataFrame({'Food_ID': top_items})
-        result_df = pd.merge(result_df, df, on='Food_ID', how='left')
+        if not top_items:
+            print(f'No valid personalized recommendations for user {user_id}, using cold start.')
+            result_df = Get_ColdStart_Recommendations(top_k)
+        else:
+            result_df = pd.DataFrame({'Product_ID': top_items})
+            result_df = pd.merge(result_df, df, on='Product_ID', how='left')
 
-    filename = f'recommendations_user_{user_id}.csv'
+    # Save to CSV
+    filename = os.path.join(output_dir, f'recommendations_user_{user_id}.csv')
     result_df.to_csv(filename, index=False)
     print(f'Recommendations saved to {filename}')
     return result_df
 
-# Run recommendation for any users (add more if needed)
+# --- Run for all users in batch ---
 if __name__ == "__main__":
-    Get_Recommendations(1)
-    Get_Recommendations(2)
-    Get_Recommendations(3)
-    Get_Recommendations(4)
-    Get_Recommendations(445)
+    active_users = rating['User_ID'].unique()
+    for user_id in active_users:
+        Get_Recommendations(user_id)
+
+    Get_Recommendations("123")

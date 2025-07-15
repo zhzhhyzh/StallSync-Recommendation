@@ -1,0 +1,11 @@
+Product_ID,Name,Image,Merchant_ID,Rating,Price
+KR000005,KimChi ramyeon,d0aa2f10-653f-4b17-9615-aa85557c2756.jpg,KR,0.0,11.99
+KR000007,Dubu Jorim,4e031a40-0757-425a-ab03-bb0ddc3c99ab.jpg,KR,0.0,12.99
+MM000004,Satay,834a1d24-5c67-46f2-b251-5fa0f6bfe01a.jpg,MM,0.0,8.99
+MM000007,Ayam Kut Teh,83816022-d19b-4ca8-9d6d-2e4c92198499.jpg,MM,0.0,15.99
+MM000001,Nasi Lemak,ed5afcc9-bd30-4ca6-9c74-93f5a4f13db8.jpg,MM,0.0,5.99
+4F000007,Donburi,2495ac7d-e848-4c81-a6d8-aad2aad91e18.jpg,4F,0.0,20.99
+4F000006,Cute Bento,27a6b763-fe49-4527-a76e-b5c47af0c0d1.jpg,4F,0.0,10.99
+4F000001,Package deals,f4c27c96-78d5-439e-9b63-6728ae2623d1.jpg,4F,0.0,40.99
+4F000002,Sashimi Set,f6288273-7527-4dc9-9a02-97ee50f76b06.jpg,4F,0.0,30.99
+4F000004,Oden,43a3c47b-e7c6-4ce3-b0f5-74e87dfa3699.jpg,4F,0.0,20.99

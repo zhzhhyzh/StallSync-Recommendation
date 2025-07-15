@@ -1,0 +1,9 @@
+Product_ID,Name,Image,Merchant_ID,Rating,Price
+MM000002,Lemon Tea,c6fd2e3e-706a-4b3f-988d-1f649903cf58.jpg,MM,0.0,2.90
+KR000005,KimChi ramyeon,d0aa2f10-653f-4b17-9615-aa85557c2756.jpg,KR,0.0,11.99
+KR000001,Bimbimbap,cd5d648f-d09a-4a8b-b723-d78e642e5a6f.jpg,KR,0.0,20.90
+KR000006,Gimbap,320b3431-a9d1-4b2b-a23a-1123195350f4.jpg,KR,0.0,5.99
+KR000002,JaJang Men,0ca619b9-b5a0-45b3-9eb2-7ec98a552483.jpg,KR,0.0,12.99
+MM000001,Nasi Lemak,ed5afcc9-bd30-4ca6-9c74-93f5a4f13db8.jpg,MM,0.0,5.99
+MM000004,Satay,834a1d24-5c67-46f2-b251-5fa0f6bfe01a.jpg,MM,0.0,8.99
+KR000004,KR Fried Chicken,4401851f-8600-428f-89a6-d32f9b2b2c30.jpg,KR,0.0,16.99

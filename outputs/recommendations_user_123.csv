@@ -1,0 +1,11 @@
+Product_ID,Name,Image,Merchant_ID,Rating,Price
+MM000005,Cendol,ca4db25c-8f37-4abf-a49a-8122d0ab9e69.jpg,MM,0.0,5.99
+MM000002,Lemon Tea,c6fd2e3e-706a-4b3f-988d-1f649903cf58.jpg,MM,0.0,2.90
+MM000006,Laksa,3f570b43-3600-4db4-8c08-044a1a8aa841.jpg,MM,0.0,6.99
+MM000004,Satay,834a1d24-5c67-46f2-b251-5fa0f6bfe01a.jpg,MM,0.0,8.99
+MM000003,Nasi Lemak + Ayam Goreng,71a1b79d-f8b7-4853-8ebf-4630dcf4bb14.jpg,MM,0.0,10.90
+MM000001,Nasi Lemak,ed5afcc9-bd30-4ca6-9c74-93f5a4f13db8.jpg,MM,0.0,5.99
+MM000007,Ayam Kut Teh,83816022-d19b-4ca8-9d6d-2e4c92198499.jpg,MM,0.0,15.99
+4F000004,Oden,43a3c47b-e7c6-4ce3-b0f5-74e87dfa3699.jpg,4F,0.0,20.99
+4F000006,Cute Bento,27a6b763-fe49-4527-a76e-b5c47af0c0d1.jpg,4F,0.0,10.99
+4F000003,Omu rice,5f0e886d-7c99-456f-a143-b1380fa2755d.jpg,4F,0.0,13.99
